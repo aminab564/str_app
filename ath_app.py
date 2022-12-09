@@ -2,19 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
+import plotly.graph_objects as go
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 
-
-st.markdown("# Who is a Linkedin User? - by Amina Zimic")
-
-st.markdown("### Please enter the information below")
-
-name = "Amina Zimic"
-
-st.write(name)
 
 s = pd.read_csv("social_media_usage.csv")
 
@@ -36,10 +29,6 @@ ss = ss.dropna()
 
 #st.dataframe(ss)
 
-alt_plot = alt.Chart(ss.groupby(["age", "sm_li"], as_index=False)["sm_li"].mean()).mark_circle().encode(x="age",
-      y="sm_li",
-      color="sm_li:N")
-#st.altair_chart(alt_plot, use_container_width=True)
 
 
 # #### 4. Create a target vector (y) and feature set (X)
@@ -83,142 +72,228 @@ lr.fit(X_train, y_train)
 # #### 10. Use the model to make predictions. For instance, what is the probability that a high income (e.g. income=8), with a high level of education (e.g. 7), non-parent who is married female and 42 years old uses LinkedIn? How does the probability change if another person is 82 years old, but otherwise the same?
 
 
+##############################################################################
 
-# New data for features: income, education, parent, married, female and age
-#person_1 = [8, 7, 0, 1, 1, 42]
+# STREAMLIT
 
-# Predict class, given input features
-#predicted_class_1 = lr.predict([person_1])
+#############################################################################
 
-# Generate probability of positive class (=1)
-#probs_1 = lr.predict_proba([person_1])
+st.markdown(" *MSBA Programming 2 - Final Project by: Amina Zimic*")
+st.title('Are you a LinkedIn User?')
+#st.subheader("by: Amina Zimic")
 
+from PIL import Image
+pic = Image.open("pic.webp")
 
-# In[120]:
-
-
-# Print predicted class and probability
-#print(f"Predicted class: {predicted_class_1[0]}") # 0=not Linkedin User, 1=Linkedin User
-#print(f"Probability that this person is a Linkedin User: {probs_1[0][1]}")
-
-
-# In[121]:
-
-
-# New data for features: income, education, parent, married, female and age
-#person_2 = [8, 7, 0, 1, 1, 82]
-
-# Predict class, given input features
-#predicted_class_2 = lr.predict([person_2])
-
-# Generate probability of positive class (=1)
-#probs_2 = lr.predict_proba([person_2])
-
-
-# In[122]:
-
-
-# Print predicted class and probability
-#print(f"Predicted class: {predicted_class_2[0]}") # 0=not Linkedin User, 1=Linkedin User
-#print(f"Probability that this person is a Linkedin User: {probs_2[0][1]}")
-
-
-###################################
-
-"### What is your yearly income?"
-# answerInc = st.selectbox(label="Please select",
-# options=(" ",
-#     "Less than $10,000", "$10,000 to $20,000", "$20,000 to $30,000", 
-#         "$30,000 to $40,000", "$40,000 to $50,000", "$50,000 to $75,000", 
-#         "$75,000 to $100,000", "$100,000 to $150,000",
-#     "$150,000 or more"))
-# st.write("You selected: ", answerInc)
-
-
-# inputs = []
-# for each in options:
-#     inputs.append((each, 
-#         if answerInc == "Less than $10,000":
-#             print(1)
-#         elif answerInc == "$10,000 to $20,000":
-#             print(2)
-#         elif answerInc == "$20,000 to $30,000":
-#             print(3)
-#         elif answerInc == "$30,000 to $40,000":
-#             print(4)
-#         elif answerInc == "$40,000 to $50,000":
-#             print(5)
-#         elif answerInc == "$50,000 to $75,000":
-#             print(6)
-#         elif answerInc == "$75,000 to $100,000":
-#             print(7)
-#         elif answerInc == "$100,000 to $150,000":
-#             print(8)
-#         elif answerInc == "$150,000 or more":
-#             print(9)
-#         elif answerInc == " ":
-#             print(98)
-#         else:
-#             print(99)
-#     )
-
-
-
-###### 5 Take user input
-
-# "### User input"
-# st.text_input("What do you like most about analytics?", key="analytics_like")
-
-# import streamlit as st
-# import pandas as pd
-# import numpy as np
-# from prediction import predict
-
-
-"### What is your yearly income?"
-answerInc = st.selectbox(label="Please select",
-options=(" ",
-    "Less than $10,000", "$10,000 to $20,000", "$20,000 to $30,000", 
-        "$30,000 to $40,000", "$40,000 to $50,000", "$50,000 to $75,000", 
-        "$75,000 to $100,000", "$100,000 to $150,000",
-    "$150,000 or more"))
-st.write("You selected: ", answerInc)
-
-st.title('Classifying Linkedin Users')
-st.markdown('intro')
-
-st.header("User Features")
 col1, col2 = st.columns(2)
-
 with col1:
-    st.text("Demographic 1")
-    income = st.slider('Income ($)', 1, 9, 1)
-    education = st.slider('Education', 1, 8, 1)
-    parent = st.slider('Parent', 0, 1, 1)
+    st.text("")
+    st.markdown(" ##### Enter your income, education, parental and marital status, gender, and age using the sidebar on the left - and let me take a guess!  Click on the *LinkedIn User?* button below to find out.")
+    
 
 with col2:
-    st.text("Demographics 2")
-    married = st.slider('Married', 0, 1, 1)
-    gender = st.slider('Female', 0, 1, 1)
-    age = st.slider('Age', 10, 98, 1)
+    #st.subheader("by: Amina Zimic")
+    st.image(pic, width=300)
+    
+
+
+
+#st.markdown('text')
+
+#st.header("header")
+# col1, col2 = st.columns(2)
+
+# with col1:
+#     st.text("Demographic 1")
+#     income = st.slider('Income ($)', 1, 9, 1)
+#     education = st.slider('Education', 1, 8, 1)
+#     parent = st.slider('Parent', 0, 1, 1)
+
+# with col2:
+#     st.text("Demographics 2")
+#     married = st.slider('Married', 0, 1, 1)
+#     gender = st.slider('Female', 0, 1, 1)
+#     age = st.slider('Age', 10, 98, 1)
+
+# st.text('')
+# if st.button("Predict if a Linkedin User"):
+#     result = lr.predict(
+#         np.array([[income, education, parent, married, gender, age]]))
+#     st.write("Predicted class: ", result[0])
+#     prob = lr.predict_proba(
+#         np.array([[income, education, parent, married, gender, age]]))
+#     st.write("Probability that this person is a Linkedin User: ", prob[0][1])
+    
+
+
+with st.sidebar: 
+# Income
+    "#### What is your yearly income?"
+    income = st.selectbox("Please select income:", 
+             options = ["Less than $10,000",
+                        "$10,000 to $20,000",
+                        "$20,000 to $30,000",
+                        "$30,000 to $40,000",
+                        "$40,000 to $50,000",
+                        "$50,000 to $75,000",
+                        "$75,000 to $100,000",
+                        "$100,000 to $150,000",
+                        "$150,000 or more"
+                        ])
+
+
+if income == "Less than $10,000":
+    income = 1
+elif income == "$10,000 to $20,000":
+    income = 2
+elif income == "$20,000 to $30,000":
+    income = 3
+elif income == "$30,000 to $40,000":
+    income = 4
+elif income == "$40,000 to $50,000":
+    income = 5
+elif income == "$50,000 to $75,000":
+    income = 6
+elif income == "$75,000 to $100,000":
+    income = 7
+elif income == "$100,000 to $150,000":
+    income = 8
+else:
+    income = 9
+    
+with st.sidebar:
+# Education
+    "#### What is the highest level of school/degree you completed?"
+    education = st.selectbox("Please select education level:", 
+             options = ["Less than high school (Grades 1-8 or no formal schooling)",
+                        "High school incomplete (Grades 9-11 or Grade 12 with NO diploma)",
+                        "High school graduate (Grade 12 with diploma or GED certificate)",
+                        "Some college, no degree (includes some community college)",
+                        "Two-year associate degree from a college or university",
+                        "Four-year college or university degree/Bachelor’s degree (e.g., BS, BA, AB)",
+                        "Some postgraduate or professional schooling, no postgraduate degree (e.g. some graduate school)",
+                        "Postgraduate or professional degree, including master’s, doctorate, medical or law degree (e.g., MA, MS, PhD, MD, JD)"
+                        ])
+
+
+if education == "Less than high school (Grades 1-8 or no formal schooling)":
+    education = 1
+elif education == "High school incomplete (Grades 9-11 or Grade 12 with NO diploma)":
+    education = 2
+elif education == "High school graduate (Grade 12 with diploma or GED certificate)":
+    education = 3
+elif education == "Some college, no degree (includes some community college)":
+    education = 4
+elif education == "Two-year associate degree from a college or university":
+    education = 5
+elif education == "Four-year college or university degree/Bachelor’s degree (e.g., BS, BA, AB)":
+    education = 6
+elif education == "Some postgraduate or professional schooling, no postgraduate degree (e.g. some graduate school)":
+    education = 7
+else:
+    education = 8
+
+with st.sidebar:
+# Parent
+    "#### Are you a parent of a child under 18 living in your home?"
+    parent = st.selectbox("Please select Yes or No:", 
+             options = ["Yes",
+                        "No",                        
+                        ])
+
+
+if parent == "Yes":
+    parent = 1
+else:
+    parent = 0
+
+with st.sidebar:
+# Married
+    "#### What is your current marital status?"
+    married = st.selectbox("Please select marital status:", 
+             options = ["Married",
+                        "Living with a partner", 
+                        "Divorced",
+                        "Separated",
+                        "Widowed",
+                        "Never been married",                       
+                        ])
+
+
+if married == "Married":
+    married = 1
+elif married == "Living with a partner":
+    married = 0
+elif married == "Divorced":
+    married = 0
+elif married == "Separated":
+    married = 0
+elif married == "Widowed":
+    married = 0
+else:
+    married = 0
+
+
+with st.sidebar:
+# Gender
+    "#### What is your gender?"
+    gender = st.selectbox("Please select gender:", 
+             options = ["Female",
+                        "Male",                        
+                        ])
+
+
+if gender == "Female":
+    gender = 1
+else:
+    gender = 0
+
+with st.sidebar:
+# Age
+    "#### How old are you?"
+    age = st.number_input("Please enter your age:", min_value=1, max_value=98)
+
 
 st.text('')
-if st.button("Predict if a Linkedin User"):
+if st.button("LinkedIn User?"):
     result = lr.predict(
         np.array([[income, education, parent, married, gender, age]]))
-    st.write("Predicted class: ", result[0])
+    
+    if result == 1:
+        result = "Yes"
+    else:
+        result = "No"
+    
+    st.write("Predicted LinkedIn user? ", result[0])
     prob = lr.predict_proba(
         np.array([[income, education, parent, married, gender, age]]))
-    st.write("Probability that this person is a Linkedin User: ", prob[0][1])
-    
+    st.write("Probability that this person is a LinkedIn User: ", prob[0][1])
 
 
- 
-    
-#probs = lr.predict_proba([result])
+#st.write(f"This person is {mar_label}, a {deg_label}, and in a {inc_label} bracket")
 
-# # Predict class, given input features
-# predicted_class_2 = lr.predict([person_2])
+# fig = go.Figure(go.Indicator(
+#     mode = "gauge+number",
+#     value = score,
+#     title = {'text': f"Sentiment: {result}"},
+#     gauge = {"axis": {"range": [-1, 1]},
+#             "steps": [
+#                 {"range": [-1, -.15], "color":"red"},
+#                 {"range": [-.15, .15], "color":"gray"},
+#                 {"range": [.15, 1], "color":"lightgreen"}
+#             ],
+#             "bar":{"color":"yellow"}}
+# ))
 
-# # Generate probability of positive class (=1)
-# probs_2 = lr.predict_proba([person_2])
+
+# st.plotly_chart(fig)
+
+
+
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.caption("Image source: https://www.proinfluent.com/en/who-uses-linkedin/")
