@@ -88,7 +88,7 @@ pic = Image.open("pic.webp")
 col1, col2 = st.columns(2)
 with col1:
     st.text("")
-    st.markdown(" ##### Enter your income, education, parental and marital status, gender, and age using the sidebar on the left - and let me take a guess!  Click on the *LinkedIn User?* button below to find out.")
+    st.markdown(" ##### Enter your income, education, parental and marital status, gender, and age using the sidebar on the left - and click on the *LinkedIn User?* button below to find out!")
     
 
 with col2:
@@ -259,34 +259,60 @@ if st.button("LinkedIn User?"):
     result = lr.predict(
         np.array([[income, education, parent, married, gender, age]]))
     
-    if result == 1:
-        result = "Yes"
-    else:
-        result = "No"
+    # if result == 1:
+    #     result = "Yes"
+    # else:
+    #     result = "No"
     
-    st.write("Predicted LinkedIn user? ", result[0])
+    #st.write("Predicted LinkedIn user? ", result[0])
     prob = lr.predict_proba(
         np.array([[income, education, parent, married, gender, age]]))
-    st.write("Probability that this person is a LinkedIn User: ", prob[0][1])
+    #st.write("Probability that you are a LinkedIn User: ", round(prob[0][1], 2))
 
 
 #st.write(f"This person is {mar_label}, a {deg_label}, and in a {inc_label} bracket")
 
-# fig = go.Figure(go.Indicator(
-#     mode = "gauge+number",
-#     value = score,
-#     title = {'text': f"Sentiment: {result}"},
-#     gauge = {"axis": {"range": [-1, 1]},
-#             "steps": [
-#                 {"range": [-1, -.15], "color":"red"},
-#                 {"range": [-.15, .15], "color":"gray"},
-#                 {"range": [.15, 1], "color":"lightgreen"}
-#             ],
-#             "bar":{"color":"yellow"}}
-# ))
+#### Create label (called sent) from TextBlob polarity score to use in summary below
 
 
-# st.plotly_chart(fig)
+
+    df = pd.DataFrame({
+        "income": [income],
+        "education": [education],
+        "parent": [parent],
+        "married": [married],
+        "female": [gender],
+        "age": [age]
+    })
+
+
+    probability = lr.predict_proba(df)
+
+    if probability[0][1] > 0.5:
+        label = "You are a LinkedIn User"
+    else:
+        label = "You are not a LinkedIn User"    
+
+    #### Show results
+
+    ### Print sentiment score, label, and language
+    st.markdown(f"## Predicted class: **{label}**")
+
+    #probability = 0.6434
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number",
+        value = probability[0][1],
+        title = {'text': f"Probability that you are a LinkedIn user is: {round((probability[0][1]*100))}%"},
+        gauge = {"axis": {"range": [0, 1]},
+                "steps": [
+                    {"range": [0, 1], "color":"indianred"},
+                    {"range": [0.5, 1], "color":"navy"}
+                ],
+                "bar":{"color":"cornsilk"}}
+    ))
+
+
+    st.plotly_chart(fig)
 
 
 
