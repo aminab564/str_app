@@ -88,7 +88,7 @@ pic = Image.open("pic.webp")
 col1, col2 = st.columns(2)
 with col1:
     st.text("")
-    st.markdown(" ##### Enter your income, education, parental and marital status, gender, and age using the sidebar on the left - and click on the *LinkedIn User?* button below to find out!")
+    st.markdown(" ##### Enter your income, education, parental and marital status, gender, and age using the sidebar on the left - and click on the *LinkedIn User?* button below to see our data based prediction!")
     
 
 with col2:
@@ -305,10 +305,10 @@ if st.button("LinkedIn User?"):
         title = {'text': f"Probability that you are a LinkedIn user is: {round((probability[0][1]*100))}%"},
         gauge = {"axis": {"range": [0, 1]},
                 "steps": [
-                    {"range": [0, 1], "color":"indianred"},
-                    {"range": [0.5, 1], "color":"navy"}
+                    {"range": [0, 1], "color":"tomato"},
+                    {"range": [0.5, 1], "color":"darkblue"}
                 ],
-                "bar":{"color":"cornsilk"}}
+                "bar":{"color":"silver"}}
     ))
 
 
@@ -316,6 +316,12 @@ if st.button("LinkedIn User?"):
 
 
 
+
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
+st.write(" ")
 st.write(" ")
 st.write(" ")
 st.write(" ")
